@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Runway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+
+    <!-- Start screen -->
+    <section id="start" class="screen">
+      <div class="hero">
+        <div class="hero-mark">🚀</div>
+        <h1>Runway</h1>
+        <p class="tagline">Make the calls that keep your startup alive.</p>
+      </div>
+      <ul class="rules">
+        <li>Each week someone brings you a problem. Pick how to handle it.</li>
+        <li>Every choice moves your four meters: <b>Cash</b>, <b>Team</b>, <b>Users</b> and <b>Investors</b>.</li>
+        <li>If any meter hits <b>empty</b> or <b>full</b>, the run is over. Too much of a good thing is a problem too.</li>
+        <li>Hover over a choice to see which meters it will affect. A bigger dot means a bigger change.</li>
+      </ul>
+      <button id="start-btn" class="primary">Start the company</button>
+      <p id="best-start" class="best"></p>
+    </section>
+
+    <!-- Game screen -->
+    <section id="game" class="screen" hidden>
+      <header class="topbar">
+        <span class="brand">Runway</span>
+        <span id="week-label" class="week"></span>
+      </header>
+      <div class="progress"><div id="progress-fill" class="progress-fill"></div></div>
+
+      <div id="meters" class="meters"></div>
+
+      <article id="card" class="card">
+        <div class="who">
+          <div id="avatar" class="avatar"></div>
+          <div>
+            <div id="who-name" class="who-name"></div>
+            <div id="who-role" class="who-role"></div>
+          </div>
+        </div>
+        <p id="card-text" class="card-text"></p>
+        <div id="choices" class="choices"></div>
+        <div id="result" class="result" hidden>
+          <p id="result-text" class="result-text"></p>
+          <button id="continue-btn" class="primary">Continue</button>
+        </div>
+      </article>
+      <p class="hint">Tip: press 1, 2 or 3 to choose, and Enter to continue.</p>
+    </section>
+
+    <!-- End screen -->
+    <section id="end" class="screen" hidden>
+      <div class="hero">
+        <div id="end-mark" class="hero-mark"></div>
+        <h1 id="end-title"></h1>
+        <p id="end-text" class="end-text"></p>
+      </div>
+      <div class="stats">
+        <div class="stat"><span id="stat-weeks" class="stat-num"></span><span class="stat-label">weeks survived</span></div>
+        <div class="stat"><span id="stat-best" class="stat-num"></span><span class="stat-label">best run</span></div>
+      </div>
+      <div class="history">
+        <h2>Your last calls</h2>
+        <ol id="history-list"></ol>
+      </div>
+      <button id="restart-btn" class="primary">Found another startup</button>
+    </section>
+
+  </main>
+
+  <script src="cards.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
