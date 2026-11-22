@@ -1,6 +1,6 @@
-# Runway
+# Crossroads
 
-A small decision-making game you play in the browser. You run a startup, and each week someone brings you a problem. Every choice moves four meters: **Cash**, **Team**, **Users** and **Investors**. If any meter hits empty or full, the run is over.
+A small decision-making game about one person's life, played in the browser. People in your life bring you choices: your manager, your best friend, an old friend. Every choice moves four meters: **Health**, **Money**, **People** and **Happiness**. If any meter hits empty or full, the story ends.
 
 **Play it:** https://alielmayyah.github.io/runway/
 
@@ -40,11 +40,11 @@ To add a decision, add an entry to `CARDS` in [`src/data/cards.js`](src/data/car
 ```js
 {
   id: "unique_id",
-  who: "priya",                 // a key in CHARACTERS
+  who: "maya",                  // a key in CHARACTERS
   text: "The dilemma...",
   choices: [
-    { label: "Option A", effects: { cash: -10, team: +10 }, result: "What happened." },
-    { label: "Option B", effects: { users: +15 } },
+    { label: "Option A", effects: { money: -10, people: +10 }, result: "What happened." },
+    { label: "Option B", effects: { joy: +15 } },
   ],
 }
 ```

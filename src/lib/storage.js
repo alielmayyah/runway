@@ -1,5 +1,5 @@
 // localStorage can be unavailable (private mode, blocked storage), so every access is guarded.
-const BEST_KEY = 'runway.bestWeeks'
+const BEST_KEY = 'crossroads.best'
 
 export function getBest() {
   try {
@@ -9,9 +9,9 @@ export function getBest() {
   }
 }
 
-export function saveBest(weeks) {
+export function saveBest(decisions) {
   try {
-    if (weeks > getBest()) localStorage.setItem(BEST_KEY, String(weeks))
+    if (decisions > getBest()) localStorage.setItem(BEST_KEY, String(decisions))
   } catch {
     // Ignore: the best score is a convenience only.
   }

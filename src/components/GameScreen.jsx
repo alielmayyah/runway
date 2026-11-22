@@ -22,9 +22,9 @@ export default function GameScreen({ onFinish }) {
   }, [index])
 
   function advance(ending, finalMeters, finalHistory) {
-    if (ending) return onFinish({ ending, weeks: index + 1, history: finalHistory })
+    if (ending) return onFinish({ ending, decisions: index + 1, history: finalHistory })
     if (index + 1 >= CARDS.length) {
-      return onFinish({ ending: winEnding(finalMeters), weeks: CARDS.length, history: finalHistory })
+      return onFinish({ ending: winEnding(finalMeters), decisions: CARDS.length, history: finalHistory })
     }
     busy.current = false
     setOutcome(null)
@@ -37,7 +37,7 @@ export default function GameScreen({ onFinish }) {
 
     const choice = card.choices[i]
     const { meters: next, deltas } = applyEffects(meters, choice.effects)
-    const nextHistory = [...history, { week: index + 1, who: CHARACTERS[card.who].name, label: choice.label }]
+    const nextHistory = [...history, { step: index + 1, who: CHARACTERS[card.who].name, label: choice.label }]
     const ending = findEnding(next)
 
     setPreview(null)
@@ -72,9 +72,9 @@ export default function GameScreen({ onFinish }) {
   return (
     <section>
       <header className="flex items-baseline justify-between">
-        <span className="font-bold tracking-tight">Runway</span>
+        <span className="font-bold tracking-tight">Crossroads</span>
         <span className="text-muted tabular-nums">
-          Week {index + 1} of {CARDS.length}
+          Decision {index + 1} of {CARDS.length}
         </span>
       </header>
       <div className="mt-2 mb-5 h-1 overflow-hidden rounded-full bg-track">

@@ -6,20 +6,20 @@ import { useScreenEnter } from './useScreenEnter.js'
 export default function EndScreen({ result, best, onRestart }) {
   const ref = useScreenEnter()
   const mark = useRef(null)
-  const [weeksShown, setWeeksShown] = useState(0)
+  const [shown, setShown] = useState(0)
   const total = CARDS.length
 
   useGSAP(
     () => {
       gsap.from(mark.current, { scale: 0, rotate: -30, duration: 0.7, delay: 0.15, ease: 'back.out(2.5)' })
-      // Count the weeks up from 0
+      // Count the decisions up from 0
       const counter = { v: 0 }
       gsap.to(counter, {
-        v: result.weeks,
+        v: result.decisions,
         duration: 0.8,
         delay: 0.3,
         ease: 'power2.out',
-        onUpdate: () => setWeeksShown(Math.round(counter.v)),
+        onUpdate: () => setShown(Math.round(counter.v)),
       })
     },
     { scope: ref },
@@ -36,8 +36,8 @@ export default function EndScreen({ result, best, onRestart }) {
       </div>
 
       <div className="my-6 grid grid-cols-2 gap-3">
-        <Stat label="weeks survived">
-          {weeksShown}/{total}
+        <Stat label="decisions made">
+          {shown}/{total}
         </Stat>
         <Stat label="best run">
           {best}/{total}
@@ -48,9 +48,9 @@ export default function EndScreen({ result, best, onRestart }) {
         <h2 className="mb-2 font-bold">Your calls</h2>
         <ol className="list-decimal space-y-1 pl-5">
           {result.history.slice(-5).map((h) => (
-            <li key={h.week}>
+            <li key={h.step}>
               <span className="text-sm text-muted">
-                Week {h.week}, {h.who}:
+                Decision {h.step}, {h.who}:
               </span>{' '}
               {h.label}
             </li>
@@ -59,7 +59,7 @@ export default function EndScreen({ result, best, onRestart }) {
       </div>
 
       <button className="btn-primary" onClick={onRestart} autoFocus>
-        Found another startup
+        Live it again
       </button>
     </section>
   )
