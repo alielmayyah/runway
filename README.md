@@ -41,7 +41,7 @@ npm run build       # type-check and build to dist/
 
 ## Deploy
 
-GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) runs lint, the TREE.md check, the type check and the build on every pull request. Every push to `main` is also deployed to GitHub Pages.
+Work happens on the `dev` branch, and `main` is what gets deployed. GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) runs lint, the TREE.md check, the type check and the build on every push to `dev` or `main` and on every pull request. Pushes to `main` are also deployed to GitHub Pages.
 
 ## Add a decision
 
