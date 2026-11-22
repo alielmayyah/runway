@@ -2,10 +2,10 @@
 import { ARCHETYPES, ENDINGS } from '../data/cards.js'
 
 export const METERS = [
-  { key: 'cash', label: 'Cash', icon: '💰' },
-  { key: 'team', label: 'Team', icon: '👥' },
-  { key: 'users', label: 'Users', icon: '📈' },
-  { key: 'investors', label: 'Investors', icon: '🤝' },
+  { key: 'health', label: 'Health', icon: '❤️' },
+  { key: 'money', label: 'Money', icon: '💰' },
+  { key: 'people', label: 'People', icon: '🫂' },
+  { key: 'joy', label: 'Happiness', icon: '😊' },
 ]
 
 export const START_VALUE = 50

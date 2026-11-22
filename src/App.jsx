@@ -16,7 +16,7 @@ export default function App() {
   }
 
   const finish = (runResult) => {
-    saveBest(runResult.weeks)
+    saveBest(runResult.decisions)
     setBest(getBest())
     setResult(runResult)
     setScreen('end')
