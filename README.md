@@ -1,6 +1,6 @@
 # Crossroads
 
-A small decision-making game about one person's life, played in the browser. People in your life bring you choices: your manager, your best friend, an old friend. Every choice moves four meters: **Health**, **Money**, **People** and **Happiness**. If any meter hits empty or full, the story ends.
+A small decision-making game about one person's whole life, played in the browser. It starts at age 0, and as you grow up, life keeps handing you choices. Every choice moves four meters: **Health**, **Smarts**, **People** and **Happiness**. If any meter hits empty or full, the story ends.
 
 **Play it:** https://alielmayyah.github.io/runway/
 
@@ -50,13 +50,14 @@ To add a decision, add an entry to `CARDS` in [`src/data/cards.ts`](src/data/car
 ```ts
 {
   id: 'unique_id',
-  who: 'maya',                  // a key in CHARACTERS
+  age: 12,                      // how old you are when this comes up
+  who: 'coach',                 // a key in CHARACTERS
   text: 'The dilemma...',
   choices: [
-    { label: 'Option A', effects: { money: -10, people: +10 }, result: 'What happened.' },
+    { label: 'Option A', effects: { smarts: -10, people: +10 }, result: 'What happened.' },
     { label: 'Option B', effects: { joy: +15 } },
   ],
 }
 ```
 
-Decisions are played in order, and the game ends after the last one.
+Decisions are played in order (keep them sorted by age), and the game ends after the last one.

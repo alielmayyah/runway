@@ -57,7 +57,7 @@ export default function EndScreen({ result, best, onRestart }: EndScreenProps) {
           {result.history.slice(-5).map((h) => (
             <li key={h.step}>
               <span className="text-sm text-muted">
-                Decision {h.step}, {h.who}:
+                Age {h.age}, {h.who}:
               </span>{' '}
               {h.label}
             </li>

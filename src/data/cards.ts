@@ -1,67 +1,71 @@
-// Game content. Add new decisions to CARDS. They are played in order.
+// Game content. Add new decisions to CARDS. They are played in order, from youngest age to oldest.
 //
-// Meter keys: health, money, people, joy (each runs from 0 to 100 and starts at 50).
+// Meter keys: health, smarts, people, joy (each runs from 0 to 100 and starts at 50).
 // The Card, Choice and Ending types are in ../types.ts.
+// After changing anything here, run `npm run tree` to update TREE.md.
 
 import type { Card, Character, Ending, MeterKey } from '../types.ts'
 
 export const CHARACTERS = {
-  leila: { name: 'Leila', role: 'Your manager', avatar: '💼' },
-  maya: { name: 'Maya', role: 'Your best friend', avatar: '🙋🏽‍♀️' },
-  sam: { name: 'Sam', role: 'An old friend', avatar: '✈️' },
+  crib: { name: '3:00 AM', role: 'In your crib', avatar: '🍼' },
+  rivera: { name: 'Ms. Rivera', role: 'Your kindergarten teacher', avatar: '🍎' },
+  coach: { name: 'Coach Dee', role: 'Soccer coach', avatar: '⚽' },
 } satisfies Record<string, Character>
 
 export type CharacterId = keyof typeof CHARACTERS
 
 export const CARDS: Card[] = [
   {
-    id: 'promotion',
-    who: 'leila',
-    text: "There's a promotion opening up and it's yours if you want it. Fair warning: it means 60-hour weeks for the next year.",
+    id: 'night',
+    age: 0,
+    who: 'crib',
+    text: "You're wide awake. The house is dark and quiet, and Mom and Dad are asleep down the hall.",
     choices: [
       {
-        label: 'Take the promotion.',
-        effects: { money: +25, health: -15, people: -10 },
-        result: 'The raise hits your account. Dinner is usually something from a vending machine.',
+        label: 'Cry until someone comes.',
+        effects: { people: +20, health: -10, joy: +5 },
+        result: 'Dad stumbles in, scoops you up and hums the same song four times. Nobody sleeps much, but you feel very loved.',
       },
       {
-        label: 'Turn it down. Keep your evenings.',
-        effects: { money: -10, health: +10, joy: +10 },
-        result: 'Leila nods, a little disappointed. That evening you go for a long walk and actually cook dinner.',
+        label: 'Babble at the ceiling fan.',
+        effects: { smarts: +15, people: -15, joy: +5 },
+        result: 'You spend an hour working out how the fan goes round. Nobody notices you were awake.',
       },
     ],
   },
   {
-    id: 'couch',
-    who: 'maya',
-    text: "I'm going through a breakup and I can't stay at the apartment. Can I crash on your couch for a month?",
+    id: 'buddy',
+    age: 5,
+    who: 'rivera',
+    text: "Time to pick a buddy for the year! Do you want Leo, the loud kid everyone likes, or Ada, the quiet girl reading in the corner?",
     choices: [
       {
-        label: 'Of course. Come over.',
-        effects: { people: +25, money: -10, health: -10 },
-        result: 'Late-night talks, takeout every night, and very little sleep. Maya says you saved her life.',
+        label: 'Leo, the loud kid.',
+        effects: { people: +25, joy: +10, smarts: -15 },
+        result: "Leo introduces you to the whole class by lunchtime. Neither of you hears a word of the alphabet song.",
       },
       {
-        label: "I'm sorry, I can't right now.",
-        effects: { people: -30, joy: +5 },
-        result: 'Your place stays quiet. Maya stops texting first.',
+        label: 'Ada, the quiet reader.',
+        effects: { smarts: +20, people: -15, joy: -5 },
+        result: 'Ada teaches you to read chapter books. The other kids decide you two are "the weird ones".',
       },
     ],
   },
   {
-    id: 'trip',
-    who: 'sam',
-    text: 'The old crew is doing a last-minute trip to Lisbon. Flights leave Friday. You in?',
+    id: 'soccer',
+    age: 9,
+    who: 'coach',
+    text: 'Tryouts are on Saturday. If you make the team, it means practice at 7am every weekend. Or you could just stay home and play video games.',
     choices: [
       {
-        label: 'Book it!',
-        effects: { joy: +25, money: -30, health: -5 },
-        result: 'Sunsets, custard tarts and laughing until 3am. Your credit card statement is less fun.',
+        label: 'Go to tryouts.',
+        effects: { health: +20, people: +5, smarts: -10, joy: -10 },
+        result: "You make the team. You're the fastest kid on the field, and too tired to do your homework.",
       },
       {
-        label: 'Stay home and rest.',
-        effects: { health: +10, joy: -15, people: -10 },
-        result: "You sleep ten hours. The group chat fills up with photos you're not in.",
+        label: 'Stay home and play video games.',
+        effects: { joy: +20, health: -25, smarts: +15, people: -5 },
+        result: 'You beat every puzzle game in the house and learn to type really fast. You also forget what outside looks like.',
       },
     ],
   },
@@ -70,27 +74,27 @@ export const CARDS: Card[] = [
 /** Shown when a meter hits 0 (low) or 100 (high). */
 export const ENDINGS: Record<MeterKey, { low: Ending; high: Ending }> = {
   health: {
-    low: { mark: '🛏️', title: 'Burned out', text: 'Your body makes the decision for you. Two weeks in bed, staring at the ceiling.' },
-    high: { mark: '🏋️', title: 'Fitness obsessed', text: 'You track every meal and run at 5am. Nobody has seen you at a dinner in months.' },
+    low: { mark: '🤒', title: 'Always sick', text: 'Too many late nights and too much junk food. You spend more days in bed than at school.' },
+    high: { mark: '🏃', title: 'Sports-obsessed', text: 'Practice every morning, games every weekend. You forget what a lazy Sunday feels like.' },
   },
-  money: {
-    low: { mark: '💸', title: 'Broke', text: 'Your card gets declined at the grocery store. You move back into your childhood bedroom.' },
-    high: { mark: '🏦', title: 'Rich and empty', text: 'Your savings account looks beautiful. Your calendar is completely empty.' },
+  smarts: {
+    low: { mark: '😶', title: 'Checked out', text: 'School stops making sense, so you stop trying. Teachers sigh when they read your name.' },
+    high: { mark: '🤓', title: 'Too clever for your own good', text: 'You skip two grades and correct every teacher. Nobody your age wants to sit with you at lunch.' },
   },
   people: {
-    low: { mark: '📵', title: 'Alone', text: 'The phone stops ringing. Your birthday passes without a single message.' },
-    high: { mark: '🙇', title: 'People-pleaser', text: 'You said yes to everyone, for everything. There is no time left that belongs to you.' },
+    low: { mark: '🚪', title: 'The loner', text: 'You eat lunch alone every day. After a while, you stop looking up when people walk past.' },
+    high: { mark: '🎭', title: 'Class clown', text: "You'll do anything for a laugh. You're sent to the principal's office so often that you have your own chair." },
   },
   joy: {
-    low: { mark: '🌧️', title: 'Running on empty', text: 'Nothing feels like anything anymore. You stop making plans altogether.' },
-    high: { mark: '🎈', title: 'Head in the clouds', text: 'You chased every good feeling and ignored every warning. Reality catches up all at once.' },
+    low: { mark: '🌧️', title: 'The gray days', text: 'The days blur together and nothing sounds fun anymore.' },
+    high: { mark: '🍭', title: 'Spoiled', text: 'Every day is a party and every wish comes true. The word "no" makes you cry for an hour.' },
   },
 }
 
 /** Shown when you make it through every decision. Picked by your highest meter. */
 export const ARCHETYPES: Record<MeterKey, Ending> = {
-  health: { mark: '🌿', title: 'The Steady One', text: 'You took care of yourself first. Calm, rested and ready for whatever comes next.' },
-  money: { mark: '📊', title: 'The Planner', text: 'Your future self will thank you. Your present self could use a little more fun.' },
-  people: { mark: '🫂', title: 'The Glue', text: 'Everyone you love knows they can count on you. Remember to lean on them too.' },
-  joy: { mark: '🌅', title: 'The Free Spirit', text: "You followed what made you happy. Life feels light, even if your bank account doesn't." },
+  health: { mark: '🌿', title: 'The Sporty Kid', text: 'Scraped knees, grass stains, and more energy than anyone can keep up with.' },
+  smarts: { mark: '📚', title: 'The Little Genius', text: 'You ask "why?" about everything, and you usually find out.' },
+  people: { mark: '🫂', title: "Everyone's Friend", text: "There's a birthday party every weekend, and you're invited to all of them." },
+  joy: { mark: '🌈', title: 'The Happy Kid', text: 'You laugh easily and often. Grown-ups say you light up the room.' },
 }

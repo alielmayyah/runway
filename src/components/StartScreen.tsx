@@ -24,13 +24,13 @@ export default function StartScreen({ best, onStart }: StartScreenProps) {
           🧭
         </div>
         <h1 className="mt-3 mb-1 text-[2.4rem] font-bold tracking-tight">Crossroads</h1>
-        <p className="text-lg text-muted">Make the choices that shape a life.</p>
+        <p className="text-lg text-muted">A whole life, one choice at a time.</p>
       </div>
 
       <ul className="panel my-6 list-disc space-y-1.5 py-5 pr-5 pl-10">
-        <li>Someone in your life brings you a choice. Decide what to do.</li>
+        <li>Your life starts at age 0. As you grow up, life keeps handing you choices.</li>
         <li>
-          Every choice moves your four meters: <b>Health</b>, <b>Money</b>, <b>People</b> and <b>Happiness</b>.
+          Every choice moves your four meters: <b>Health</b>, <b>Smarts</b>, <b>People</b> and <b>Happiness</b>.
         </li>
         <li>
           If any meter hits <b>empty</b> or <b>full</b>, the story ends. Too much of a good thing is a problem too.

@@ -42,7 +42,10 @@ export default function GameScreen({ onFinish }: GameScreenProps) {
 
     const choice = card.choices[i]
     const { meters: next, deltas } = applyEffects(meters, choice.effects)
-    const nextHistory = [...history, { step: index + 1, who: CHARACTERS[card.who].name, label: choice.label }]
+    const nextHistory = [
+      ...history,
+      { step: index + 1, age: card.age, who: CHARACTERS[card.who].name, label: choice.label },
+    ]
     const ending = findEnding(next)
 
     setPreview(null)
@@ -79,7 +82,7 @@ export default function GameScreen({ onFinish }: GameScreenProps) {
   return (
     <section>
       <header className="flex items-baseline justify-between">
-        <span className="font-bold tracking-tight">Crossroads</span>
+        <span className="font-bold tracking-tight">Age {card.age}</span>
         <span className="text-muted tabular-nums">
           Decision {index + 1} of {CARDS.length}
         </span>

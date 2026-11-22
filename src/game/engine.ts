@@ -4,7 +4,7 @@ import type { Effects, Ending, MeterDef, Meters } from '../types.ts'
 
 export const METERS: readonly MeterDef[] = [
   { key: 'health', label: 'Health', icon: '❤️' },
-  { key: 'money', label: 'Money', icon: '💰' },
+  { key: 'smarts', label: 'Smarts', icon: '🧠' },
   { key: 'people', label: 'People', icon: '🫂' },
   { key: 'joy', label: 'Happiness', icon: '😊' },
 ]

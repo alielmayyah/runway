@@ -38,7 +38,9 @@ function build() {
   function walk(id: string, index: number, meters: Meters, path: string[]) {
     const card = CARDS[index]
     const who = CHARACTERS[card.who]
-    lines.push(`  ${id}["${esc(`${who.avatar} <b>${who.name}</b> · ${who.role}<br/>${card.text}`)}"]:::decision`)
+    lines.push(
+      `  ${id}["${esc(`<b>Age ${card.age}</b><br/>${who.avatar} <b>${who.name}</b> · ${who.role}<br/>${card.text}`)}"]:::decision`,
+    )
 
     card.choices.forEach((choice, i) => {
       const label = 'ABCDEFGHI'[i]

@@ -1,6 +1,6 @@
 import type { CharacterId } from './data/cards.ts'
 
-export type MeterKey = 'health' | 'money' | 'people' | 'joy'
+export type MeterKey = 'health' | 'smarts' | 'people' | 'joy'
 
 /** Every meter's value, from 0 to 100. */
 export type Meters = Record<MeterKey, number>
@@ -29,6 +29,8 @@ export interface Choice {
 
 export interface Card {
   id: string
+  /** How old you are when this decision comes up. */
+  age: number
   who: CharacterId
   text: string
   choices: Choice[]
@@ -42,6 +44,7 @@ export interface Ending {
 
 export interface HistoryEntry {
   step: number
+  age: number
   who: string
   label: string
 }
