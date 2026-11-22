@@ -1,0 +1,115 @@
+// Theme tokens and the few component styles that are awkward in utility classes.
+// Tailwind maps these CSS variables to utilities in tailwind.css (bg-surface, text-muted, ...).
+@use 'sass:map';
+
+$palettes: (
+  light: (
+    bg: #f3efe6,
+    surface: #fffdf8,
+    ink: #1f1c17,
+    muted: #6d675c,
+    line: #e3dccd,
+    track: #e9e2d3,
+    accent: #2d6a4f,
+    accent-hover: #24573f,
+    accent-ink: #ffffff,
+    danger: #c0392b,
+    up: #2d8a57,
+    down: #c0392b,
+    shadow-color: rgba(50, 35, 10, 0.1),
+  ),
+  dark: (
+    bg: #15171a,
+    surface: #1f2226,
+    ink: #ece8df,
+    muted: #9a958b,
+    line: #2e3237,
+    track: #2b2f34,
+    accent: #52b788,
+    accent-hover: #74c69d,
+    accent-ink: #0f1a14,
+    danger: #ef6f5e,
+    up: #6fcf97,
+    down: #ef6f5e,
+    shadow-color: rgba(0, 0, 0, 0.35),
+  ),
+);
+
+@mixin palette($name) {
+  color-scheme: $name;
+  @each $token, $value in map.get($palettes, $name) {
+    --#{$token}: #{$value};
+  }
+}
+
+:root {
+  @include palette(light);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include palette(dark);
+  }
+}
+
+:root[data-theme='dark'] {
+  @include palette(dark);
+}
+
+// ---------- Meter gauge ----------
+
+$bar-width: 34px;
+$bar-height: 96px;
+$danger-zone: 15%;
+$dot-size: 14px;
+
+@mixin danger-stripes {
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent 0 4px,
+    color-mix(in srgb, var(--danger) 22%, transparent) 4px 7px
+  );
+}
+
+.meter-bar {
+  position: relative;
+  width: $bar-width;
+  height: $bar-height;
+  background: var(--track);
+  border-radius: 10px;
+  overflow: hidden;
+
+  // Hatched danger zones at the top and bottom
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    height: $danger-zone;
+    z-index: 2;
+    pointer-events: none;
+    @include danger-stripes;
+  }
+  &::before { top: 0; }
+  &::after { bottom: 0; }
+}
+
+.meter-fill {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 0;
+  background: var(--accent);
+  transition: background-color 0.3s;
+
+  .is-danger & {
+    background: var(--danger);
+  }
+}
+
+.meter-dot {
+  width: $dot-size;
+  height: $dot-size;
+  border-radius: 50%;
+  background: var(--ink);
+}

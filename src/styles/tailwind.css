@@ -1,0 +1,34 @@
+@import 'tailwindcss';
+
+/* Colors come from the CSS variables defined in main.scss, so light and dark mode switch automatically. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-track: var(--track);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-ink: var(--accent-ink);
+  --color-danger: var(--danger);
+  --color-up: var(--up);
+  --color-down: var(--down);
+  --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --shadow-card: 0 12px 32px var(--shadow-color);
+}
+
+@layer components {
+  .btn-primary {
+    @apply block w-full cursor-pointer rounded-2xl bg-accent px-5 py-3.5 text-base font-bold text-accent-ink transition hover:bg-accent-hover active:scale-[0.98];
+  }
+  .panel {
+    @apply rounded-[18px] border border-line bg-surface shadow-card;
+  }
+}
+
+@layer base {
+  button:focus-visible {
+    @apply outline-3 outline-offset-2 outline-accent;
+  }
+}

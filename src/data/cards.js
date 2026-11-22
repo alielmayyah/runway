@@ -8,12 +8,12 @@
 //   text     the dilemma
 //   choices  2-3 options: { label, effects: { meter: delta }, result?: "what happened" }
 
-const CHARACTERS = {
+export const CHARACTERS = {
   priya: { name: "Priya", role: "CTO", avatar: "👩🏽‍💻" },
   dana: { name: "Dana Voss", role: "Lead Investor", avatar: "🦈" },
 };
 
-const CARDS = [
+export const CARDS = [
   {
     id: "priya_rewrite",
     who: "priya",
@@ -51,7 +51,7 @@ const CARDS = [
 ];
 
 // Shown when a meter hits 0 (low) or 100 (high).
-const ENDINGS = {
+export const ENDINGS = {
   cash: {
     low: { mark: "💸", title: "Out of runway", text: "The bank account hits zero and payroll bounces. The company is over." },
     high: { mark: "🏦", title: "Sitting on the pile", text: "The board decides you're hoarding cash instead of growing, and hires a new CEO to spend it." },
@@ -71,7 +71,7 @@ const ENDINGS = {
 };
 
 // Shown when you survive every decision. Picked by your highest meter.
-const ARCHETYPES = {
+export const ARCHETYPES = {
   cash: { mark: "💰", title: "The Penny-Pincher", text: "You made it with money in the bank. Nobody had fun, but nobody got fired either." },
   team: { mark: "👥", title: "The People's Founder", text: "You made it with a team that would follow you anywhere. Your users are still waiting on that roadmap." },
   users: { mark: "📈", title: "The Product Visionary", text: "You made it with users who love what you built. Your spreadsheet is a little scary." },
