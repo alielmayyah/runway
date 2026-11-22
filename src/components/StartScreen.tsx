@@ -1,21 +1,26 @@
 import { useRef } from 'react'
-import { CARDS } from '../data/cards.js'
-import { gsap, reducedMotion, useGSAP } from '../lib/motion.js'
-import { useScreenEnter } from './useScreenEnter.js'
+import { CARDS } from '../data/cards.ts'
+import { gsap, reducedMotion, useGSAP } from '../lib/motion.ts'
+import { useScreenEnter } from './useScreenEnter.ts'
 
-export default function StartScreen({ best, onStart }) {
+interface StartScreenProps {
+  best: number
+  onStart: () => void
+}
+
+export default function StartScreen({ best, onStart }: StartScreenProps) {
   const ref = useScreenEnter()
-  const rocket = useRef(null)
+  const compass = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
     if (reducedMotion) return
-    gsap.to(rocket.current, { y: -8, rotate: -6, duration: 1.6, ease: 'sine.inOut', yoyo: true, repeat: -1 })
+    gsap.to(compass.current, { y: -8, rotate: -6, duration: 1.6, ease: 'sine.inOut', yoyo: true, repeat: -1 })
   })
 
   return (
     <section ref={ref}>
       <div className="pt-6 pb-2 text-center">
-        <div ref={rocket} className="inline-block text-[56px] leading-none">
+        <div ref={compass} className="inline-block text-[56px] leading-none">
           🧭
         </div>
         <h1 className="mt-3 mb-1 text-[2.4rem] font-bold tracking-tight">Crossroads</h1>

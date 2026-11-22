@@ -1,13 +1,17 @@
 import { useRef } from 'react'
-import { BIG_EFFECT, DANGER_HIGH, DANGER_LOW, METERS } from '../game/engine.js'
-import { gsap, useGSAP } from '../lib/motion.js'
+import { BIG_EFFECT, DANGER_HIGH, DANGER_LOW, METERS } from '../game/engine.ts'
+import { gsap, useGSAP } from '../lib/motion.ts'
+import type { Effects, MeterChange, MeterDef, Meters as MeterValues } from '../types.ts'
 
-/**
- * @param meters   current values, 0-100
- * @param preview  effects of the hovered choice, or null
- * @param change   { deltas, id } from the last choice; a new id replays the arrows
- */
-export default function Meters({ meters, preview, change }) {
+interface MetersProps {
+  meters: MeterValues
+  /** Effects of the hovered choice, or null */
+  preview: Effects | null
+  /** Deltas from the last choice */
+  change: MeterChange | null
+}
+
+export default function Meters({ meters, preview, change }: MetersProps) {
   return (
     <div className="mb-5 grid grid-cols-4 gap-2">
       {METERS.map((m) => (
@@ -24,11 +28,19 @@ export default function Meters({ meters, preview, change }) {
   )
 }
 
-function Meter({ meter, value, previewDelta, delta, changeId }) {
-  const root = useRef(null)
-  const fill = useRef(null)
-  const dot = useRef(null)
-  const arrow = useRef(null)
+interface MeterProps {
+  meter: MeterDef
+  value: number
+  previewDelta: number
+  delta: number
+  changeId?: string
+}
+
+function Meter({ meter, value, previewDelta, delta, changeId }: MeterProps) {
+  const root = useRef<HTMLDivElement>(null)
+  const fill = useRef<HTMLDivElement>(null)
+  const dot = useRef<HTMLDivElement>(null)
+  const arrow = useRef<HTMLDivElement>(null)
   const danger = value <= DANGER_LOW || value >= DANGER_HIGH
 
   // Fill level

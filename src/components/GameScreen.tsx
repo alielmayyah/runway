@@ -1,19 +1,24 @@
 import { useEffect, useRef, useState } from 'react'
-import { CARDS, CHARACTERS } from '../data/cards.js'
-import { applyEffects, findEnding, initialMeters, winEnding } from '../game/engine.js'
-import { gsap, useGSAP } from '../lib/motion.js'
-import DecisionCard from './DecisionCard.jsx'
-import Meters from './Meters.jsx'
+import { CARDS, CHARACTERS } from '../data/cards.ts'
+import { applyEffects, findEnding, initialMeters, winEnding } from '../game/engine.ts'
+import { gsap, useGSAP } from '../lib/motion.ts'
+import type { Effects, Ending, HistoryEntry, MeterChange, Meters as MeterValues, Outcome, RunResult } from '../types.ts'
+import DecisionCard from './DecisionCard.tsx'
+import Meters from './Meters.tsx'
 
-export default function GameScreen({ onFinish }) {
+interface GameScreenProps {
+  onFinish: (result: RunResult) => void
+}
+
+export default function GameScreen({ onFinish }: GameScreenProps) {
   const [index, setIndex] = useState(0)
-  const [meters, setMeters] = useState(initialMeters)
-  const [history, setHistory] = useState([])
-  const [outcome, setOutcome] = useState(null)
-  const [preview, setPreview] = useState(null)
-  const [change, setChange] = useState(null)
+  const [meters, setMeters] = useState<MeterValues>(initialMeters)
+  const [history, setHistory] = useState<HistoryEntry[]>([])
+  const [outcome, setOutcome] = useState<Outcome | null>(null)
+  const [preview, setPreview] = useState<Effects | null>(null)
+  const [change, setChange] = useState<MeterChange | null>(null)
   const busy = useRef(false)
-  const progress = useRef(null)
+  const progress = useRef<HTMLDivElement>(null)
 
   const card = CARDS[index]
 
@@ -21,7 +26,7 @@ export default function GameScreen({ onFinish }) {
     gsap.to(progress.current, { width: `${(index / CARDS.length) * 100}%`, duration: 0.5, ease: 'power2.out' })
   }, [index])
 
-  function advance(ending, finalMeters, finalHistory) {
+  function advance(ending: Ending | null, finalMeters: MeterValues, finalHistory: HistoryEntry[]) {
     if (ending) return onFinish({ ending, decisions: index + 1, history: finalHistory })
     if (index + 1 >= CARDS.length) {
       return onFinish({ ending: winEnding(finalMeters), decisions: CARDS.length, history: finalHistory })
@@ -31,7 +36,7 @@ export default function GameScreen({ onFinish }) {
     setIndex(index + 1)
   }
 
-  function choose(i) {
+  function choose(i: number) {
     if (busy.current) return
     busy.current = true
 
@@ -52,7 +57,9 @@ export default function GameScreen({ onFinish }) {
     }
   }
 
-  const continueOn = () => advance(outcome.ending, outcome.meters, outcome.history)
+  const continueOn = () => {
+    if (outcome) advance(outcome.ending, outcome.meters, outcome.history)
+  }
 
   // Number keys pick a choice. Enter is handled by the focused Continue button.
   const chooseRef = useRef(choose)
@@ -60,7 +67,7 @@ export default function GameScreen({ onFinish }) {
     chooseRef.current = choose
   })
   useEffect(() => {
-    const onKey = (e) => {
+    const onKey = (e: KeyboardEvent) => {
       if (outcome || !/^[1-9]$/.test(e.key)) return
       const i = Number(e.key) - 1
       if (i < card.choices.length) chooseRef.current(i)

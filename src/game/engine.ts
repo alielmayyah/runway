@@ -1,7 +1,8 @@
 // Pure game rules, with no React or DOM code.
-import { ARCHETYPES, ENDINGS } from '../data/cards.js'
+import { ARCHETYPES, ENDINGS } from '../data/cards.ts'
+import type { Effects, Ending, MeterDef, Meters } from '../types.ts'
 
-export const METERS = [
+export const METERS: readonly MeterDef[] = [
   { key: 'health', label: 'Health', icon: '❤️' },
   { key: 'money', label: 'Money', icon: '💰' },
   { key: 'people', label: 'People', icon: '🫂' },
@@ -13,14 +14,15 @@ export const DANGER_LOW = 20
 export const DANGER_HIGH = 80
 export const BIG_EFFECT = 10
 
-export const initialMeters = () => Object.fromEntries(METERS.map((m) => [m.key, START_VALUE]))
+export const initialMeters = (): Meters =>
+  Object.fromEntries(METERS.map((m) => [m.key, START_VALUE])) as Meters
 
-const clamp = (v) => Math.max(0, Math.min(100, v))
+const clamp = (v: number) => Math.max(0, Math.min(100, v))
 
 /** Applies a choice's effects. Returns the new meter values and the non-zero deltas. */
-export function applyEffects(meters, effects = {}) {
+export function applyEffects(meters: Meters, effects: Effects = {}): { meters: Meters; deltas: Effects } {
   const next = { ...meters }
-  const deltas = {}
+  const deltas: Effects = {}
   for (const { key } of METERS) {
     const d = effects[key] ?? 0
     if (!d) continue
@@ -31,7 +33,7 @@ export function applyEffects(meters, effects = {}) {
 }
 
 /** Returns the game-over ending if any meter is empty or full, otherwise null. */
-export function findEnding(meters) {
+export function findEnding(meters: Meters): Ending | null {
   for (const { key } of METERS) {
     if (meters[key] <= 0) return ENDINGS[key].low
     if (meters[key] >= 100) return ENDINGS[key].high
@@ -40,7 +42,7 @@ export function findEnding(meters) {
 }
 
 /** The ending for surviving every decision, picked by the highest meter. */
-export function winEnding(meters) {
+export function winEnding(meters: Meters): Ending {
   const top = METERS.reduce((a, b) => (meters[b.key] > meters[a.key] ? b : a))
   return ARCHETYPES[top.key]
 }

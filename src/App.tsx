@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import StartScreen from './components/StartScreen.jsx'
-import GameScreen from './components/GameScreen.jsx'
-import EndScreen from './components/EndScreen.jsx'
-import { getBest, saveBest } from './lib/storage.js'
+import StartScreen from './components/StartScreen.tsx'
+import GameScreen from './components/GameScreen.tsx'
+import EndScreen from './components/EndScreen.tsx'
+import { getBest, saveBest } from './lib/storage.ts'
+import type { RunResult } from './types.ts'
+
+type Screen = 'start' | 'game' | 'end'
 
 export default function App() {
-  const [screen, setScreen] = useState('start')
+  const [screen, setScreen] = useState<Screen>('start')
   const [runId, setRunId] = useState(0)
-  const [result, setResult] = useState(null)
+  const [result, setResult] = useState<RunResult | null>(null)
   const [best, setBest] = useState(getBest)
 
   const start = () => {
@@ -15,7 +18,7 @@ export default function App() {
     setScreen('game')
   }
 
-  const finish = (runResult) => {
+  const finish = (runResult: RunResult) => {
     saveBest(runResult.decisions)
     setBest(getBest())
     setResult(runResult)
@@ -26,7 +29,7 @@ export default function App() {
     <main className="mx-auto max-w-[560px] px-4 pt-6 pb-12">
       {screen === 'start' && <StartScreen best={best} onStart={start} />}
       {screen === 'game' && <GameScreen key={runId} onFinish={finish} />}
-      {screen === 'end' && <EndScreen result={result} best={best} onRestart={start} />}
+      {screen === 'end' && result && <EndScreen result={result} best={best} onRestart={start} />}
     </main>
   )
 }

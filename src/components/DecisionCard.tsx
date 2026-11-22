@@ -1,13 +1,20 @@
 import { useRef } from 'react'
-import { CHARACTERS } from '../data/cards.js'
-import { gsap, useGSAP } from '../lib/motion.js'
+import { CHARACTERS } from '../data/cards.ts'
+import { gsap, useGSAP } from '../lib/motion.ts'
+import type { Card, Effects, Outcome } from '../types.ts'
 
-/**
- * One decision. Remount it (with a new key) for each card so the entrance animation replays.
- * @param outcome  { text, ending } once a choice with a result has been made, otherwise null
- */
-export default function DecisionCard({ card, outcome, onChoose, onContinue, onPreview }) {
-  const root = useRef(null)
+interface DecisionCardProps {
+  card: Card
+  /** Set once a choice with a result line has been made */
+  outcome: Outcome | null
+  onChoose: (index: number) => void
+  onContinue: () => void
+  onPreview: (effects: Effects | null) => void
+}
+
+/** One decision. Remount it (with a new key) for each card so the entrance animation replays. */
+export default function DecisionCard({ card, outcome, onChoose, onContinue, onPreview }: DecisionCardProps) {
+  const root = useRef<HTMLElement>(null)
   const who = CHARACTERS[card.who]
 
   // Card entrance

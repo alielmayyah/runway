@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc -b && vite build",
     "lint": "oxlint",
+    "typecheck": "tsc -b",
+    "tree": "node scripts/tree.ts",
+    "tree:check": "node scripts/tree.ts --check",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -17,12 +20,14 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
     "oxlint": "^1.90.0",
     "sass": "^1.108.2",
     "tailwindcss": "^4.3.5",
+    "typescript": "~7.0.2",
     "vite": "^8.3.6"
   }
 }

@@ -27,6 +27,8 @@ jobs:
 
       - run: npm ci
       - run: npm run lint
+      - name: Check TREE.md matches the decisions
+        run: npm run tree:check
       - run: npm run build
 
       - name: Upload site for GitHub Pages

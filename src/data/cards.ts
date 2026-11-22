@@ -1,20 +1,19 @@
 // Game content. Add new decisions to CARDS. They are played in order.
 //
 // Meter keys: health, money, people, joy (each runs from 0 to 100 and starts at 50).
-//
-// Card shape:
-//   id       unique string
-//   who      key into CHARACTERS
-//   text     the dilemma
-//   choices  2-3 options: { label, effects: { meter: delta }, result?: "what happened" }
+// The Card, Choice and Ending types are in ../types.ts.
+
+import type { Card, Character, Ending, MeterKey } from '../types.ts'
 
 export const CHARACTERS = {
   leila: { name: 'Leila', role: 'Your manager', avatar: '💼' },
   maya: { name: 'Maya', role: 'Your best friend', avatar: '🙋🏽‍♀️' },
   sam: { name: 'Sam', role: 'An old friend', avatar: '✈️' },
-}
+} satisfies Record<string, Character>
 
-export const CARDS = [
+export type CharacterId = keyof typeof CHARACTERS
+
+export const CARDS: Card[] = [
   {
     id: 'promotion',
     who: 'leila',
@@ -28,7 +27,7 @@ export const CARDS = [
       {
         label: 'Turn it down. Keep your evenings.',
         effects: { money: -10, health: +10, joy: +10 },
-        result: "Leila nods, a little disappointed. That evening you go for a long walk and actually cook dinner.",
+        result: 'Leila nods, a little disappointed. That evening you go for a long walk and actually cook dinner.',
       },
     ],
   },
@@ -68,11 +67,11 @@ export const CARDS = [
   },
 ]
 
-// Shown when a meter hits 0 (low) or 100 (high).
-export const ENDINGS = {
+/** Shown when a meter hits 0 (low) or 100 (high). */
+export const ENDINGS: Record<MeterKey, { low: Ending; high: Ending }> = {
   health: {
     low: { mark: '🛏️', title: 'Burned out', text: 'Your body makes the decision for you. Two weeks in bed, staring at the ceiling.' },
-    high: { mark: '🏋️', title: 'Fitness obsessed', text: "You track every meal and run at 5am. Nobody has seen you at a dinner in months." },
+    high: { mark: '🏋️', title: 'Fitness obsessed', text: 'You track every meal and run at 5am. Nobody has seen you at a dinner in months.' },
   },
   money: {
     low: { mark: '💸', title: 'Broke', text: 'Your card gets declined at the grocery store. You move back into your childhood bedroom.' },
@@ -88,8 +87,8 @@ export const ENDINGS = {
   },
 }
 
-// Shown when you make it through every decision. Picked by your highest meter.
-export const ARCHETYPES = {
+/** Shown when you make it through every decision. Picked by your highest meter. */
+export const ARCHETYPES: Record<MeterKey, Ending> = {
   health: { mark: '🌿', title: 'The Steady One', text: 'You took care of yourself first. Calm, rested and ready for whatever comes next.' },
   money: { mark: '📊', title: 'The Planner', text: 'Your future self will thank you. Your present self could use a little more fun.' },
   people: { mark: '🫂', title: 'The Glue', text: 'Everyone you love knows they can count on you. Remember to lean on them too.' },

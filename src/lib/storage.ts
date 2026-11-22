@@ -1,7 +1,7 @@
 // localStorage can be unavailable (private mode, blocked storage), so every access is guarded.
 const BEST_KEY = 'crossroads.best'
 
-export function getBest() {
+export function getBest(): number {
   try {
     return Number(localStorage.getItem(BEST_KEY)) || 0
   } catch {
@@ -9,7 +9,7 @@ export function getBest() {
   }
 }
 
-export function saveBest(decisions) {
+export function saveBest(decisions: number): void {
   try {
     if (decisions > getBest()) localStorage.setItem(BEST_KEY, String(decisions))
   } catch {

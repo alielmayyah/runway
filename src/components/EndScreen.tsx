@@ -1,11 +1,18 @@
-import { useRef, useState } from 'react'
-import { CARDS } from '../data/cards.js'
-import { gsap, useGSAP } from '../lib/motion.js'
-import { useScreenEnter } from './useScreenEnter.js'
+import { useRef, useState, type ReactNode } from 'react'
+import { CARDS } from '../data/cards.ts'
+import { gsap, useGSAP } from '../lib/motion.ts'
+import type { RunResult } from '../types.ts'
+import { useScreenEnter } from './useScreenEnter.ts'
 
-export default function EndScreen({ result, best, onRestart }) {
+interface EndScreenProps {
+  result: RunResult
+  best: number
+  onRestart: () => void
+}
+
+export default function EndScreen({ result, best, onRestart }: EndScreenProps) {
   const ref = useScreenEnter()
-  const mark = useRef(null)
+  const mark = useRef<HTMLDivElement>(null)
   const [shown, setShown] = useState(0)
   const total = CARDS.length
 
@@ -65,7 +72,7 @@ export default function EndScreen({ result, best, onRestart }) {
   )
 }
 
-function Stat({ label, children }) {
+function Stat({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="panel flex flex-col p-4 text-center shadow-none">
       <span className="text-[2rem] font-bold tabular-nums">{children}</span>

@@ -3,7 +3,7 @@ import { useGSAP } from '@gsap/react'
 
 gsap.registerPlugin(useGSAP)
 
-export const reducedMotion =
+export const reducedMotion: boolean =
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 // With reduced motion, every tween finishes almost instantly instead of animating.
